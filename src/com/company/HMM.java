@@ -8,11 +8,13 @@ import java.util.List;
  */
 public class HMM {
     private FeatureVec w;
+    private FeatureVec wTotal;
     private FeatureFactory factory;
     private Tag[] allTags;
 
     public HMM(WordStat ws){
         w=new FeatureVec();
+        wTotal=new FeatureVec();
         this.factory=new FeatureFactory(ws);
         allTags=NERTag.getAllTags();
     }
@@ -77,12 +79,16 @@ public class HMM {
         if(!eq){
             FeatureVec delta=getPhi(s, groundtruth).minus(getPhi(s, tagPredicted));
             w=w.add(delta);
+            wTotal=wTotal.add(w);
             return false;
         }
         else
             return true;
     }
-    public FeatureVec getWeight(){
+    public FeatureVec getCurrentWeight(){
         return w;
+    }
+    public FeatureVec getAverageWeight(){
+        return wTotal;
     }
 }

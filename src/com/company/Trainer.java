@@ -17,12 +17,18 @@ public class Trainer {
                 it++;
             sid++;
         }
-        return hmm.getWeight();
+        return hmm.getAverageWeight();
     }
     public static Tag[] predict(Sentence s, WordStat ws){
+        Tag[] allTags=NERTag.getAllTags();
         HMM hmm=new HMM(ws);
         int[][] pre=hmm.hmm(s);
         Tag[] tags=new Tag[s.getWords().size()];
 
+        tags[tags.length-1]=NERTag.getTag("END");
+        for(int i=tags.length-2;i>=0;i--){
+            tags[i]=allTags[pre[i+1][tags[i+1].getIndex()]];
+        }
+        return tags;
     }
 }
