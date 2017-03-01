@@ -32,10 +32,12 @@ public class FeatureFactory {
 
         int offset=0;
         //first: WordTag features: wordCount*nerTag
-        int wordId=ws.getWordId(s.getWords().get(k).getWord());
         int nerId=t.getIndex();
-        feature.set(offset+wordId*nerTagCount+nerId, 1);
-        offset+=wordCount*nerTagCount;
+        if(ws.exists(s.getWords().get(k).getWord())) {
+            int wordId = ws.getWordId(s.getWords().get(k).getWord());
+            feature.set(offset + wordId * nerTagCount + nerId, 1);
+        }
+        offset += wordCount * nerTagCount;
 
         //second: Bigram tag features: nerTag*nerTag
 

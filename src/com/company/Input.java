@@ -30,7 +30,7 @@ public class Input {
                 currentSentence=new ArrayList<Word>();
             }
             else{
-                String[] wds=line.split(" ");
+                String[] wds=line.split("(\\t| )+");
                 assert(wds.length==4);
                 Word w=new Word(wds[0], (POSTag)(POSTag.getTag(wds[1])), (SCTag)(SCTag.getTag(wds[2])), (NERTag)(NERTag.getTag(wds[3])));
                 ws.add(w);
