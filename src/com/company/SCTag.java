@@ -18,4 +18,7 @@ public class SCTag extends Tag {
     public static Tag getTag(String tag){
         return tb.getTag(tag, SCTag::new);
     }
+    public static void setReadOnly(boolean ro){
+        tb.setReadOnly(ro);
+    }
 }

@@ -15,8 +15,9 @@ public class Output {
             Sentence s=sentences.get(i);
             for(int j=0;j<s.getWords().size()-1;j++) {
                 Word w = s.getWords().get(j);
-                writer.write(w.getWord() + "\t" + w.getPosTag().toString() + "\t" + w.getSCTag().toString() + "\t" + w.getNerTag().toString() + "\t" + tags.get(i)[j].toString());
+                writer.write(w.getWord() + " " + w.getPosTag().toString() + " " + w.getSCTag().toString() + " " + w.getNerTag().toString() + " " + tags.get(i)[j].toString()+"\n");
             }
+            writer.write("\n");
         }
         writer.close();
     }

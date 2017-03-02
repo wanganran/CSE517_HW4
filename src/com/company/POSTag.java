@@ -18,4 +18,7 @@ public class POSTag extends Tag{
     public static Tag getTag(String tag){
         return tb.getTag(tag, POSTag::new);
     }
+    public static void setReadOnly(boolean ro){
+        tb.setReadOnly(ro);
+    }
 }

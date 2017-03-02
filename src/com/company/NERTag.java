@@ -27,4 +27,7 @@ public class NERTag extends Tag{
             result[i]=tb.getTag(i);
         return result;
     }
+    public static void setReadOnly(boolean ro){
+        tb.setReadOnly(ro);
+    }
 }

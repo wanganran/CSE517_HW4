@@ -24,12 +24,12 @@ public class FeatureVec {
         return nonZeros.keySet();
     }
     //operations
-    public double mult(FeatureVec vec){
+    public double mult(FeatureVec vec, FeatureVec omit){
         Set<Integer> nz=vec.getNonZeros();
         double result=0;
         if(nz.size()<=nonZeros.size()) {
             for (int i : nz) {
-                if(nonZeros.containsKey(i)){
+                if(nonZeros.containsKey(i) && (omit==null || omit.getNonZeros().contains(i))){
                     result+=nonZeros.get(i)*vec.get(i);
                 }
             }
@@ -37,7 +37,7 @@ public class FeatureVec {
         }
         else{
             for(int i:nonZeros.keySet()){
-                if(nz.contains(i))
+                if(nz.contains(i) && (omit==null || omit.getNonZeros().contains(i)))
                     result+=nonZeros.get(i)*vec.get(i);
             }
             return result;

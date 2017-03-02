@@ -11,12 +11,20 @@ public class HMM {
     private FeatureVec wTotal;
     private FeatureFactory factory;
     private Tag[] allTags;
+    private FeatureVec omit;
 
     public HMM(WordStat ws){
         w=new FeatureVec();
         wTotal=new FeatureVec();
         this.factory=new FeatureFactory(ws);
         allTags=NERTag.getAllTags();
+    }
+
+    public void setW(FeatureVec w){
+        this.w=w;
+    }
+    public void setOmit(FeatureVec v){
+        omit=v;
     }
 
     public int[][] hmm(Sentence s){
@@ -27,7 +35,7 @@ public class HMM {
         Tag BEGIN=NERTag.getTag("BEGIN");
         for(int i=0;i<allTags.length;i++)
         for(Tag t:allTags){
-            dp[0][t.getIndex()]=w.mult(factory.getFeatures(s,0,(NERTag)t,(NERTag)BEGIN));
+            dp[0][t.getIndex()]=w.mult(factory.getFeatures(s,0,(NERTag)t,(NERTag)BEGIN), omit);
         }
 
         for(int i=1;i<s.getWords().size();i++){
@@ -35,7 +43,7 @@ public class HMM {
                 double max=Double.NEGATIVE_INFINITY;
                 int p=0;
                 for(int k=0;k<allTags.length;k++){
-                    double r=dp[i-1][k]+w.mult(factory.getFeatures(s, i, (NERTag)(allTags[j]), (NERTag)(allTags[k])));
+                    double r=dp[i-1][k]+w.mult(factory.getFeatures(s, i, (NERTag)(allTags[j]), (NERTag)(allTags[k])), omit);
                     if(r>max){
                         max=r;
                         p=k;

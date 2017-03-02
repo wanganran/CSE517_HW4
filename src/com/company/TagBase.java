@@ -10,6 +10,8 @@ import java.util.function.Function;
  * Created by anranw on 2/26/17.
  */
 public class TagBase {
+    private boolean readOnly=false;
+    public void setReadOnly(boolean ro){this.readOnly=ro;}
     public Map<String, Tag> tags=new HashMap<>();
     public Map<String, Integer> tagIndex=new HashMap<>();
     public ArrayList<Tag> tagList=new ArrayList<>();
@@ -20,11 +22,14 @@ public class TagBase {
     public Tag getTag(String tagString, Function<String, Tag> alloc){
         if(tags.containsKey(tagString))return tags.get(tagString);
         else{
-            Tag tag=alloc.apply(tagString);
-            tags.put(tagString, tag);
-            tagList.add(tag);
-            tagIndex.put(tagString, IND++);
-            return tag;
+            if(!readOnly) {
+                Tag tag = alloc.apply(tagString);
+                tags.put(tagString, tag);
+                tagList.add(tag);
+                tagIndex.put(tagString, IND++);
+                return tag;
+            }
+            else return null;
         }
     }
     public Tag getTag(int ind){

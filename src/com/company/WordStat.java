@@ -11,20 +11,12 @@ import java.util.Map;
 public class WordStat {
     private ArrayList<String> textList=new ArrayList<String>();
     private Map<String, Integer> textIndex=new HashMap<String,Integer>();
-    private Map<String, ArrayList<Word>> wordIndex=new HashMap<String, ArrayList<Word>>();
 
     public WordStat(){}
     public void add(Word w){
         if(!textIndex.containsKey(w.getWord())){
             textList.add(w.getWord());
             textIndex.put(w.getWord(), textList.size()-1);
-
-            wordIndex.get(w.getWord()).add(w);
-        }
-        else {
-            ArrayList<Word> al=new ArrayList<>();
-            al.add(w);
-            wordIndex.put(w.getWord(), al);
         }
     }
     public int getCount(){
@@ -35,8 +27,5 @@ public class WordStat {
     }
     public int getWordId(String w){
         return textIndex.get(w);
-    }
-    public List<Word> getWords(String w){
-        return wordIndex.get(w);
     }
 }
