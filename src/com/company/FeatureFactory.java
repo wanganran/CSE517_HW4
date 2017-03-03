@@ -71,10 +71,10 @@ public class FeatureFactory {
         }
         offset += wordCount * nerTagCount;
 
-
         //1.3 word+tags
         Tag posTag=s.getWords().get(k).getPosTag();
         Tag scTag=s.getWords().get(k).getSCTag();
+/*
         if(posTag!=null && scTag !=null) {
             int posId = posTag.getIndex();
             int scId = scTag.getIndex();
@@ -87,6 +87,7 @@ public class FeatureFactory {
             }
         }
         offset += wordCount * nerTagCount*scTagCount*posTagCount;
+*/
 
         //2.1 Unigram tag: nerTag
 
@@ -109,6 +110,11 @@ public class FeatureFactory {
             feature.set(offset + posId * scTagCount * nerTagCount + scId * nerTagCount + nerId, 1);
         }
         offset += posTagCount * scTagCount * nerTagCount;
+        if(posTag!=null) {
+            int posId = posTag.getIndex();
+            feature.set(offset + posId * nerTagCount + nerId, 1);
+        }
+        offset += posTagCount * nerTagCount;
 
         //3.2 unigram previous TagTag features
         if(k>0) {
@@ -150,6 +156,7 @@ public class FeatureFactory {
         feature.set(offset+suffix*nerTagCount+nerId, 1);
         offset+=27*27*27*nerTagCount;
 
+
         //sixth: length: 15*nerTagCount
         feature.set(offset+Math.min(14, s.getWords().get(k).getWord().length())*nerTagCount+nerId, 1);
         offset+=15*nerTagCount;
@@ -173,8 +180,6 @@ public class FeatureFactory {
             if(w.charAt(i)>='0' && w.charAt(i)<='9')
                 feature.set(offset+nerId, 1);
         offset+=nerTagCount;
-
-
 
         return feature;
     }
